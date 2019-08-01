@@ -1,6 +1,6 @@
 
 
-// function getResult(){
+function getResult(){
 
     $(".main-articles").empty();
     
@@ -44,8 +44,8 @@
         }
       });
     
-// }
+}
 
 
-// getResult();
+getResult();
 
