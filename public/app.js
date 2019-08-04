@@ -29,8 +29,9 @@ function getResult(){
                 articleCount +
                 "<strong> " +
                 articleTitle +
-                "</strong>" +
-                "</span>" + "<br>" + "<br>" +
+                "</strong>" + "</span>" + 
+                "<button type='button' class='btn btn-success' style ='float:right;'>SAVE ARTICLE</button>" +
+                "<br>" + "<br>" +
                 "<h2 class='content'>" + articleContent + "</h2>" + "<br>" +
                "<div class=link-action>" + "<a href='" + articleLink + "'target='_blank'>" + "LINK TO ARTICLE" + "</a>" + "</div>" 
 
