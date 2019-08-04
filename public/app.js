@@ -1,13 +1,14 @@
 $(document).ready(function () {
 
 
-    $(".main-articles").empty();
+    $("#main-articles").empty();
     // Grab the articles as a json
     // Run an AJAX request for any unsaved headlines
     $.getJSON("/articles", function (data) {
         // For each note...
         for (var i = 0; i < data.length; i++) {
             var article = data[i];
+            // only load unsaved articles
             if (!article.saved) {
                 // Increase the articleCount (track article # - starting at 1)
                 var articleCount = i + 1;
