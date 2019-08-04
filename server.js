@@ -149,9 +149,15 @@ app.post("/articles/:id", function (req, res) {
 
   // saved pages
   app.get('/articles/saved', function (req, res) {
-    db.Article.find({saved: true}, function(err, data){
-      res.render('saved', { home: false, article : data });
+    db.Article.find({saved: true})
+    .then(function (dbArticle) {
+      // If we were able to successfully find Articles, send them back to the client
+      res.json(dbArticle);
     })
+    .catch(function (err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
   });
 
   // save article to database by changed saved field to true
