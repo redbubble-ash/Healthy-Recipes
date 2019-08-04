@@ -147,6 +147,27 @@ app.post("/articles/:id", function (req, res) {
     });
 });
 
+  // saved pages
+  app.get('/articles/saved', function (req, res) {
+    db.Article.find({saved: true}, function(err, data){
+      res.render('saved', { home: false, article : data });
+    })
+  });
+
+  // save article to database by changed saved field to true
+  app.put("/articles/:id", function(req, res){
+    var saved = req.body.saved == 'true'
+    if(saved){
+      db.Article.updateOne({_id: req.body._id},{$set: {saved:true}}, function(err, result){
+      if (err) {
+        console.log(err)
+      } else {
+        return res.send(true)
+      }
+    });
+    }
+  });
+
 // Start the server
 app.listen(PORT, function () {
   console.log("App running on port " + PORT + "!");
