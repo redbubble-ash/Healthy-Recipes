@@ -25,7 +25,7 @@ function getResult(){
 
             var $articleListItem = $("<li class='list-group-item'>");
             $articleListItem.append(
-                "<span class='label label-primary'>" +
+                "<span class='label label-primary' + data-id='" + data[i]._id + "'>" +
                 articleCount +
                 "<strong> " +
                 articleTitle +
