@@ -31,7 +31,8 @@ $(document).ready(function () {
                     "<strong> " +
                     articleTitle +
                     "</strong>" + "</span>" +
-                    "<button type='button' class='btn btn-success' style ='float:right;' >SAVE ARTICLE</button>" +
+                    "<button type='button' class='delect btn btn-success' style ='float:right; background-color: red;' >DELECT FROM SAVED</button>" + 
+                    "<button type='button' class='notes btn btn-success' style ='float:right;' >ARTICLE NOTES</button>" + 
                     "<br>" + "<br>" +
                     "<h2 class='content'>" + articleContent + "</h2>" + "<br>" +
                     "<div class=link-action>" + "<a href='" + articleLink + "'target='_blank'>" + "LINK TO ARTICLE" + "</a>" + "</div>"
