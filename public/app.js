@@ -1,82 +1,48 @@
-function getResult() {
 
-    $(".main-articles").empty();
-
-    $.getJSON("/articles", function (data) {
-        // For each note...
-        for (var i = 0; i < data.length; i++) {
-            var article = data[i];
-
-            // Increase the articleCount (track article # - starting at 1)
-            var articleCount = i + 1;
-
-            // Create the list group to contain the article and add the article content for each
-            var $articleList = $("<ul>");
-            $articleList.addClass("list-group");
-
-            // Add the newly created element to the DOM
-            $(".main-articles").append($articleList);
-
-            var articleTitle = article.title;
-            var articleContent = article.content;
-            var articleLink = article.link;
-
-            var $articleListItem = $("<li class='list-group-item'>");
-            $articleListItem.append(
-                "<span class='label label-primary' data-id='" + data[i]._id + "'>" +
-                articleCount +
-                "<strong> " +
-                articleTitle +
-                "</strong>" + "</span>" +
-                "<button type='button' class='btn btn-success' style ='float:right;' data-id='" + data[i]._id + "'>SAVE ARTICLE</button>" +
-                "<br>" + "<br>" +
-                "<h2 class='content'>" + articleContent + "</h2>" + "<br>" +
-                "<div class=link-action>" + "<a href='" + articleLink + "'target='_blank'>" + "LINK TO ARTICLE" + "</a>" + "</div>"
+$(document).ready(function () {
 
 
-            )
-            // append <li> to <ul>
-            $articleList.append($articleListItem);
+$(".main-articles").empty();
+// Grab the articles as a json
+$.getJSON("/articles", function (data) {
+    // For each note...
+    for (var i = 0; i < data.length; i++) {
+        var article = data[i];
 
-        };
+        // Increase the articleCount (track article # - starting at 1)
+        var articleCount = i + 1;
 
-        $(document).on("click", "button", function () {
-            console.log("Button CLICKED");
+        // Create the list group to contain the article and add the article content for each
+        var $articleList = $("<ul>");
+        $articleList.addClass("list-group");
 
-            // Save the id from the p tag
-            var thisId = $(this).attr("data-id");
+        // Add the newly created element to the DOM
+        $("#main-articles").append($articleList);
 
-            // Now make an ajax call for the Article
-            $.ajax({
-                    method: "GET",
-                    url: "/articles/" + thisId
-                })
+        var articleTitle = article.title;
+        var articleContent = article.content;
+        var articleLink = article.link;
 
-                .then(function (data) {
-                    console.log(data);
-                    $articleList.addClass("list-group");
-                    $(".saved-articles").append($articleList);
-
-                    $articleListItem.append(
-                        "<span class='label label-primary'  data-id='" + data._id + "'>" +
-                        "<strong> " +
-                        data.title +
-                        "</strong>" + "</span>" +
-                        "<button type='button' class='btn btn-success' style ='float:right;'>SAVE ARTICLE</button>" +
-                        "<br>" + "<br>" +
-                        "<h2 class='content'>" + data.content + "</h2>" + "<br>" +
-                        "<div class=link-action>" + "<a href='" + data.link + "'target='_blank'>" + "LINK TO ARTICLE" + "</a>" + "</div>"
-
-
-                    )
-                    // append <li> to <ul>
-                    $articleList.append($articleListItem);
-                })
-
-        });
+        var $articleListItem = $("<li class='list-group-item'>");
+        $articleListItem.append(
+            "<span class='label label-primary' data-id='" + data[i]._id + "'>" +
+            articleCount +
+            "<strong> " +
+            articleTitle +
+            "</strong>" + "</span>" +
+            "<button type='button' class='btn btn-success' style ='float:right;' data-id='" + data[i]._id + "'>SAVE ARTICLE</button>" +
+            "<br>" + "<br>" +
+            "<h2 class='content'>" + articleContent + "</h2>" + "<br>" +
+            "<div class=link-action>" + "<a href='" + articleLink + "'target='_blank'>" + "LINK TO ARTICLE" + "</a>" + "</div>"
 
 
-    });
-}
+        )
+        // append <li> to <ul>
+        $articleList.append($articleListItem);
 
-getResult();
+    };
+
+});
+
+
+});
