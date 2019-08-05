@@ -79,7 +79,7 @@ $(document).ready(function () {
             });
             var noteData = {
                 _id: currentSavedArticle._id,
-                notes: data || []
+                newData: data || []
             };
             console.log('noteData:' + JSON.stringify(noteData))
             // Adding some information about the article and article notes to the save button for easy access
@@ -99,22 +99,22 @@ $(document).ready(function () {
         // Also setting up a currentNote variable to temporarily store each note
         var notesToRender = [];
         var currentNote;
-        if (!data.notes.length) {
+        if (!data.newData.note) {
             // If we have no notes, just display a message explaining this
             currentNote = $("<li class='list-group-item'>No notes for this article yet.</li>");
             notesToRender.push(currentNote);
         } else {
-            // If we do have notes, go through each one
-            for (var i = 0; i < data.notes.length; i++) {
+            // // If we do have notes, go through each one
+            // for (var i = 0; i < data.newData.note.length; i++) {
                 // Constructs an li element to contain our noteText and a delete button
                 currentNote = $("<li class='list-group-item note'>")
-                    .text(data.notes[i].noteText)
+                    .text(data.newData.note.noteText)
                     .append($("<button class='btn btn-danger note-delete'>x</button>"));
                 // Store the note id on the delete button for easy access when trying to delete
-                currentNote.children("button").data("_id", data.notes[i]._id);
+                currentNote.children("button").data("_id", data.newData.note._id);
                 // Adding our currentNote to the notesToRender array
                 notesToRender.push(currentNote);
-            }
+            // }
         }
         // Now append the notesToRender to the note-container inside the note modal
         $(".note-container").append(notesToRender);
