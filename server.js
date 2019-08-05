@@ -192,6 +192,31 @@ app.post("/articles/:id", function (req, res) {
     }
   });
 
+   // delete note form article
+   app.delete("/api/notes/:id", function(req, res){
+    console.log('reqbody:' + JSON.stringify(req.params.id))
+    db.Note.deleteOne({_id: req.params.id}, function(err, result){
+      if (err) {
+        console.log(err)
+      } else {
+        return res.send(true)
+      }
+    });
+  });
+
+  // clear all articles from database
+  app.get("/api/clear", function(req, res){
+    console.log(req.body)
+    db.Article.deleteMany({}, function(err, result){
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(result)
+        res.send(true)
+      }
+    })
+  });
+
 // Start the server
 app.listen(PORT, function () {
   console.log("App running on port " + PORT + "!");
