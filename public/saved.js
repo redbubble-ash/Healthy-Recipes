@@ -5,8 +5,8 @@ $(document).ready(function () {
     $(document).on("click", ".notes.btn", handleArticleNotes);
     $(document).on("click", ".btn.save", handleNoteSave);
     $(document).on("click", ".btn.note-delete", handleNoteDelete);
-    $(".clear").on("click", handleArticleClear);
-    
+    $(document).on("click", ".delete.btn", handleSavedDelete);
+
     // Grab the articles as a json
     // Run an AJAX request for any unsaved headlines
     $.getJSON("/articles", function (data) {
@@ -105,14 +105,14 @@ $(document).ready(function () {
             currentNote = $("<li class='list-group-item'>No notes for this article yet.</li>");
             notesToRender.push(currentNote);
         } else {
-                // Constructs an li element to contain our noteText and a delete button
-                currentNote = $("<li class='list-group-item note'>")
-                    .text(data.newData.note.noteText)
-                    .append($("<button class='btn btn-danger note-delete' style='float:right'>x Delete Notes</button>"));
-                // Store the note id on the delete button for easy access when trying to delete
-                currentNote.children("button").data("_id", data.newData.note._id);
-                // Adding our currentNote to the notesToRender array
-                notesToRender.push(currentNote);
+            // Constructs an li element to contain our noteText and a delete button
+            currentNote = $("<li class='list-group-item note'>")
+                .text(data.newData.note.noteText)
+                .append($("<button class='btn btn-danger note-delete' style='float:right'>x Delete Notes</button>"));
+            // Store the note id on the delete button for easy access when trying to delete
+            currentNote.children("button").data("_id", data.newData.note._id);
+            // Adding our currentNote to the notesToRender array
+            notesToRender.push(currentNote);
         }
         // Now append the notesToRender to the note-container inside the note modal
         $(".note-container").append(notesToRender);
@@ -155,21 +155,43 @@ $(document).ready(function () {
         var noteToDelete = $(this).data("_id");
         // Perform an DELETE request to "/api/notes/" with the id of the note we're deleting as a parameter
         $.ajax({
-          url: "/api/notes/" + noteToDelete,
-          method: "DELETE"
-        }).then(function() {
-          // When done, hide the modal
-          bootbox.hideAll();
+            url: "/api/notes/" + noteToDelete,
+            method: "DELETE"
+        }).then(function () {
+            // When done, hide the modal
+            bootbox.hideAll();
         });
-      }
-    
-      function handleArticleClear() {
-        $.get("api/clear")
-          .then(function(data) {
-            articleContainer.empty();
-            // initPage();
-            location.reload();
-          });
-      }
+    }
 
+    function handleSavedDelete() {
+        var articleSaved = $(this)
+            .parents(".list-group")
+            .data();
+
+        // Remove this article <ul> from page
+            $(this)
+            .parents(".list-group")
+            .remove();
+
+
+        articleSaved.saved = false;
+        // Now make an ajax call for the Article
+        $.ajax({
+                method: "PUT",
+                url: "/articles/" + articleSaved._id,
+                data: articleSaved
+            })
+
+            .then(function (data) {
+                console.log(data);
+                // If the data was saved successfully
+                if (data) {
+                    // This will reload the entire list of articles
+                    location.reload();
+                }
+
+
+            })
+
+    }
 });
