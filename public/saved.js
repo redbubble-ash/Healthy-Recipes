@@ -173,8 +173,8 @@ $(document).ready(function () {
             .parents(".list-group")
             .remove();
 
-
-        articleSaved.saved = false;
+       
+        console.log("articleSaved:" +JSON.stringify(articleSaved));
         // Now make an ajax call for the Article
         $.ajax({
                 method: "PUT",
@@ -187,7 +187,7 @@ $(document).ready(function () {
                 // If the data was saved successfully
                 if (data) {
                     // This will reload the entire list of articles
-                    location.reload();
+                    // location.reload();
                 }
 
 

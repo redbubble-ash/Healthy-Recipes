@@ -11,7 +11,7 @@ var cheerio = require("cheerio");
 // Require all models
 var db = require("./models");
 
-var PORT = process.env.PORT ||4000;
+var PORT = process.env.PORT || 4000;
 
 // Initialize Express
 var app = express();
@@ -165,9 +165,11 @@ app.post("/articles/:id", function (req, res) {
     });
 });
 
-  // saved pages
-  app.get('/articles/saved', function (req, res) {
-    db.Article.find({saved: true})
+// saved pages
+app.get('/articles/saved', function (req, res) {
+  db.Article.find({
+      saved: true
+    })
     .then(function (dbArticle) {
       // If we were able to successfully find Articles, send them back to the client
       res.json(dbArticle);
@@ -176,46 +178,56 @@ app.post("/articles/:id", function (req, res) {
       // If an error occurred, send it to the client
       res.json(err);
     });
-  });
+});
 
-  // save article to database by changed saved field to true
-  app.put("/articles/:id", function(req, res){
-    var saved = req.body.saved == 'true'
-    if(saved){
-      db.Article.updateOne({_id: req.body._id},{$set: {saved:true}}, function(err, result){
+// save article to database by changed saved field to true/false
+app.put("/articles/:id", function (req, res) {
+  var saved = req.body.saved;
+  if (saved) {
+    db.Article.updateOne({
+      _id: req.body._id
+    }, {
+      $set: {
+        saved: true
+      }
+    }, function (err, result) {
       if (err) {
         console.log(err)
       } else {
         return res.send(true)
       }
     });
+  } else {
+    db.Article.updateOne({
+      _id: req.body._id
+    }, {
+      $set: {
+        saved: false
+      }
+    }, function (err, result) {
+      if (err) {
+        console.log(err)
+      } else {
+        return res.send(false)
+      }
+
+    });
+  };
+});
+
+// delete note form article
+app.delete("/api/notes/:id", function (req, res) {
+  console.log('reqbody:' + JSON.stringify(req.params.id))
+  db.Note.deleteOne({
+    _id: req.params.id
+  }, function (err, result) {
+    if (err) {
+      console.log(err)
+    } else {
+      return res.send(true)
     }
   });
-
-   // delete note form article
-   app.delete("/api/notes/:id", function(req, res){
-    console.log('reqbody:' + JSON.stringify(req.params.id))
-    db.Note.deleteOne({_id: req.params.id}, function(err, result){
-      if (err) {
-        console.log(err)
-      } else {
-        return res.send(true)
-      }
-    });
-  });
-
-  // clear all articles from database
-  app.get("/api/clear", function(req, res){
-    console.log(req.body)
-    db.Article.deleteMany({}, function(err, result){
-      if (err) {
-        console.log(err)
-      } else {
-        console.log(result)
-        res.send(true)
-      }
-    })
-  });
+});
 
 // Start the server
 app.listen(PORT, function () {
