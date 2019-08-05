@@ -18,7 +18,6 @@
             padding-bottom: 10% !important;
         }
 
-
         .list-group {
             width: 50%;
             margin-bottom: 15px !important;
@@ -70,8 +69,8 @@
 
         }
     </style>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/materia/bootstrap.min.css"/>
-     <link href="https://fonts.googleapis.com/css?family=Cormorant+SC" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/materia/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Cormorant+SC" rel="stylesheet">
     <!--google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Lato|Roboto&display=swap" rel="stylesheet" />
     <!-- Latest compiled and minified CSS -->
@@ -92,21 +91,28 @@
 </head>
 
 <body>
-    <ul class="nav nav-pills nav-fill">
-        <li class="nav-item">
-            <a class="nav-link active" href="index.html">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="saved.html">Savaed Articles</a>
-        </li>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="index.html">Home</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="saved.html">Savaed Articles <span class="sr-only">(current)</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
         <div class="jumbotron jumbotron-fluid">
+
             <div class="container">
-                <h1 class="display-4">SAVED ARTICLES</h1>
-                <p class="lead">YOUR SAVED ARTICLES</p>
+                <h1 class="display-4" style="color:lightgray; font-size: 70px !important;">SAVED ARTICLES</h1>
+                <p class="lead" style="color: lightgray;font-size: 40px !important;">YOUR SAVED ARTICLES</p>
             </div>
         </div>
     </ul>
-    </nav>
+
     <container id="saved-articles"></container>
 
 
