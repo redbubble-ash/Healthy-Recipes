@@ -126,22 +126,28 @@ $(document).ready(function () {
         // This function handles what happens when a user tries to save a new note for an article
         // Setting a variable to hold some formatted data about our note,
         // grabbing the note typed into the input box
-        var noteData;
+        // var noteData;
+        var thisId = $(this).data("article")._id;
         var newNote = $(".bootbox-body textarea")
             .val()
             .trim();
-        // If we actually have data typed into the note input field, format it
-        // and post it to the "/api/notes" route and send the formatted noteData as well
-        if (newNote) {
-            noteData = {
-                _headlineId: $(this).data("article")._id,
-                noteText: newNote
-            };
-            $.post("/articles/" + _headlineId, noteData).then(function () {
+        // Run a POST request to change the note, using what's entered in the inputs
+        $.ajax({
+                method: "POST",
+                url: "/articles/" + thisId,
+                data: {
+                    // Value taken from note textarea
+                    noteText: newNote
+                }
+            })
+            // With that done
+            .then(function (data) {
+                // Log the response
+                console.log(data);
                 // When complete, close the modal
                 bootbox.hideAll();
             });
-        }
+
     }
 
 });
